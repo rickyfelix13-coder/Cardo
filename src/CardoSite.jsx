@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 
 const tracks = [
-  { id: 1,  title: "THROW IT IN", bpm: 87,  key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00" },
-  { id: 2,  title: "PLANE SITE",  bpm: 128, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00" },
-  { id: 3,  title: "NEED YOU",    bpm: 157, key: "", lease: 29.99, exclusive: 149.99, tag: "EXCLUSIVE", duration: "3:00" },
-  { id: 4,  title: "I KNOW",      bpm: 140, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00" },
-  { id: 5,  title: "GOONIES",     bpm: 142, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00" },
-  { id: 6,  title: "COMEBACK",    bpm: 133, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00" },
-  { id: 7,  title: "BLUE WORK",   bpm: 136, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00" },
-  { id: 8,  title: "BLOW IT OFF", bpm: 160, key: "", lease: 29.99, exclusive: 149.99, tag: "EXCLUSIVE", duration: "3:00" },
-  { id: 9,  title: "2030 SOUND",  bpm: 130, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00" },
-  { id: 10, title: "TURKISH",     bpm: 147, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00" },
+  { id: 1,  title: "THROW IT IN", bpm: 87,  key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00", sc: "https://soundcloud.com/ricky_felix/throw-it-in-1" },
+  { id: 2,  title: "PLANE SITE",  bpm: 128, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00", sc: "https://soundcloud.com/ricky_felix/plane-site" },
+  { id: 3,  title: "NEED YOU",    bpm: 157, key: "", lease: 29.99, exclusive: 149.99, tag: "EXCLUSIVE", duration: "3:00", sc: "https://soundcloud.com/ricky_felix/needyou" },
+  { id: 4,  title: "I KNOW",      bpm: 140, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00", sc: "https://soundcloud.com/ricky_felix/i-know" },
+  { id: 5,  title: "GOONIES",     bpm: 142, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00", sc: "https://soundcloud.com/ricky_felix/goonies" },
+  { id: 6,  title: "COMEBACK",    bpm: 133, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00", sc: "https://soundcloud.com/ricky_felix/comeback" },
+  { id: 7,  title: "BLUE WORK",   bpm: 136, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00", sc: "https://soundcloud.com/ricky_felix/blue-work" },
+  { id: 8,  title: "BLOW IT OFF", bpm: 160, key: "", lease: 29.99, exclusive: 149.99, tag: "EXCLUSIVE", duration: "3:00", sc: "https://soundcloud.com/ricky_felix/blowitoff" },
+  { id: 9,  title: "2030 SOUND",  bpm: 130, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00", sc: "https://soundcloud.com/ricky_felix/2030sound" },
+  { id: 10, title: "TURKISH",     bpm: 147, key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00", sc: "https://soundcloud.com/ricky_felix/turkish" },
 ];
 
 const posts = [
@@ -235,23 +235,43 @@ export default function CardoSite() {
 
       <div style={{ border:"1px solid #0f0f0d" }}>
         {tracks.map(t => (
-          <div key={t.id} className="beat-row">
-            <PlayBtn id={t.id} />
-            <div style={{ display:"flex",flexDirection:"column",gap:"10px",overflow:"hidden",minWidth:0 }}>
-              <div style={{ display:"flex",alignItems:"center",gap:"10px" }}>
-                <p style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:"18px",letterSpacing:"1px",whiteSpace:"nowrap" }}>{t.title}</p>
-                <span style={{ border:`1px solid ${t.tag==="EXCLUSIVE"?"#3a3020":"#1c1810"}`,color:t.tag==="EXCLUSIVE"?"#7a6850":"#3a3028",fontFamily:"'DM Sans',sans-serif",fontSize:"9px",letterSpacing:"2px",padding:"3px 7px" }}>{t.tag}</span>
+          <div key={t.id} className="beat-row" style={{ display:"flex", flexDirection:"column", padding:"0" }}>
+            <div style={{ display:"grid",gridTemplateColumns:"44px 1fr auto auto",alignItems:"center",gap:"20px",padding:"18px 24px" }}>
+              <a
+                href={t.sc}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ width:"36px",height:"36px",borderRadius:"50%",border:"1px solid #1c1810",display:"flex",alignItems:"center",justifyContent:"center",background:"transparent",cursor:"pointer",transition:"all 0.2s",flexShrink:0,textDecoration:"none" }}
+                onMouseEnter={e=>e.currentTarget.style.borderColor="#e8d5b0"}
+                onMouseLeave={e=>e.currentTarget.style.borderColor="#1c1810"}
+              >
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="#e8d5b0"><polygon points="0,0 10,6 0,12"/></svg>
+              </a>
+              <div style={{ display:"flex",flexDirection:"column",gap:"4px",overflow:"hidden",minWidth:0 }}>
+                <div style={{ display:"flex",alignItems:"center",gap:"10px" }}>
+                  <p style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:"18px",letterSpacing:"1px",whiteSpace:"nowrap" }}>{t.title}</p>
+                  <span style={{ border:`1px solid ${t.tag==="EXCLUSIVE"?"#3a3020":"#1c1810"}`,color:t.tag==="EXCLUSIVE"?"#7a6850":"#3a3028",fontFamily:"'DM Sans',sans-serif",fontSize:"9px",letterSpacing:"2px",padding:"3px 7px" }}>{t.tag}</span>
+                </div>
+                <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"10px",color:"#2a2520",letterSpacing:"2px" }}>{t.bpm} BPM · {t.duration}</p>
               </div>
-              {playing===t.id
-                ? <Waveform playing progress={progress[t.id]??0} onSeek={v=>setProgress(p=>({...p,[t.id]:v}))} />
-                : <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"10px",color:"#2a2520",letterSpacing:"2px" }}>{t.bpm} BPM · {t.key} · {t.duration}</p>
-              }
+              <div style={{ display:"flex",flexDirection:"column",alignItems:"flex-end",gap:"5px",flexShrink:0 }}>
+                <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"11px",color:"#5a5040" }}>Lease <span style={{ color:"#8a7060" }}>${t.lease}</span></p>
+                <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"11px",color:"#3a3028" }}>Excl. <span style={{ color:"#4a3f2a" }}>${t.exclusive}</span></p>
+              </div>
+              <button className="buy-btn" onClick={()=>setCheckout(t)}>License</button>
             </div>
-            <div style={{ display:"flex",flexDirection:"column",alignItems:"flex-end",gap:"5px",flexShrink:0 }}>
-              <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"11px",color:"#5a5040" }}>Lease <span style={{ color:"#8a7060" }}>${t.lease}</span></p>
-              <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"11px",color:"#3a3028" }}>Excl. <span style={{ color:"#4a3f2a" }}>${t.exclusive}</span></p>
+            {/* SoundCloud embed */}
+            <div style={{ padding:"0 24px 16px" }}>
+              <iframe
+                width="100%"
+                height="60"
+                scrolling="no"
+                frameBorder="no"
+                allow="autoplay"
+                src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(t.sc)}&color=%23e8d5b0&inverse=true&auto_play=false&show_user=false&show_artwork=false&show_comments=false&show_reposts=false&show_teaser=false`}
+                style={{ borderRadius:"2px", background:"transparent" }}
+              />
             </div>
-            <button className="buy-btn" onClick={()=>setCheckout(t)}>License</button>
           </div>
         ))}
       </div>
