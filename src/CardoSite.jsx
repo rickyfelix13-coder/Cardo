@@ -16,7 +16,6 @@ const tracks = [
 const posts = [
   { date: "MAY 04", year: "2026", title: "The site is live. The beats are ready.", body: "Built the website from scratch today and finished 5 beats the same night. Blue Work, Goonies, I Know, Need You, Throw It In — all available in the store now. This is what the grind looks like. No days off." },
   { date: "APR 14", year: "2026", title: "New era, same discipline.", body: "Spent the last month restructuring everything. The sound is more intentional now. Less noise, more weight. You'll hear it soon. The gym and the studio are running parallel — both are transforming." },
-  { date: "MAR 30", year: "2026", title: "Why I make music alone.", body: "Tried the group thing. It wasn't for me. Solo is where the work is honest. No compromises, no politics — just the craft. Same reason I train alone at 5am." },
 ];
 
 function Waveform({ playing, progress, onSeek }) {
@@ -235,42 +234,39 @@ export default function CardoSite() {
 
       <div style={{ border:"1px solid #0f0f0d" }}>
         {tracks.map(t => (
-          <div key={t.id} className="beat-row" style={{ display:"flex", flexDirection:"column", padding:"0" }}>
-            <div style={{ display:"grid",gridTemplateColumns:"44px 1fr auto auto",alignItems:"center",gap:"20px",padding:"18px 24px" }}>
-              <a
-                href={t.sc}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ width:"36px",height:"36px",borderRadius:"50%",border:"1px solid #1c1810",display:"flex",alignItems:"center",justifyContent:"center",background:"transparent",cursor:"pointer",transition:"all 0.2s",flexShrink:0,textDecoration:"none" }}
-                onMouseEnter={e=>e.currentTarget.style.borderColor="#e8d5b0"}
-                onMouseLeave={e=>e.currentTarget.style.borderColor="#1c1810"}
-              >
-                <svg width="10" height="12" viewBox="0 0 10 12" fill="#e8d5b0"><polygon points="0,0 10,6 0,12"/></svg>
-              </a>
-              <div style={{ display:"flex",flexDirection:"column",gap:"4px",overflow:"hidden",minWidth:0 }}>
-                <div style={{ display:"flex",alignItems:"center",gap:"10px" }}>
-                  <p style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:"18px",letterSpacing:"1px",whiteSpace:"nowrap" }}>{t.title}</p>
-                  <span style={{ border:`1px solid ${t.tag==="EXCLUSIVE"?"#3a3020":"#1c1810"}`,color:t.tag==="EXCLUSIVE"?"#7a6850":"#3a3028",fontFamily:"'DM Sans',sans-serif",fontSize:"9px",letterSpacing:"2px",padding:"3px 7px" }}>{t.tag}</span>
-                </div>
-                <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"10px",color:"#2a2520",letterSpacing:"2px" }}>{t.bpm} BPM · {t.duration}</p>
+          <div key={t.id} style={{ borderBottom:"1px solid #0f0f0d", transition:"background 0.2s" }}
+            onMouseEnter={e=>e.currentTarget.style.background="rgba(232,213,176,0.02)"}
+            onMouseLeave={e=>e.currentTarget.style.background="transparent"}
+          >
+            {/* Top row */}
+            <div style={{ display:"grid",gridTemplateColumns:"1fr auto auto",alignItems:"center",gap:"20px",padding:"16px 24px 8px" }}>
+              <div style={{ display:"flex",alignItems:"center",gap:"10px",minWidth:0 }}>
+                <p style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:"18px",letterSpacing:"1px",whiteSpace:"nowrap" }}>{t.title}</p>
+                <span style={{ border:`1px solid ${t.tag==="EXCLUSIVE"?"#3a3020":"#1c1810"}`,color:t.tag==="EXCLUSIVE"?"#7a6850":"#3a3028",fontFamily:"'DM Sans',sans-serif",fontSize:"9px",letterSpacing:"2px",padding:"3px 7px",flexShrink:0 }}>{t.tag}</span>
+                <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"10px",color:"#2a2520",letterSpacing:"2px",whiteSpace:"nowrap" }}>{t.bpm} BPM</p>
               </div>
-              <div style={{ display:"flex",flexDirection:"column",alignItems:"flex-end",gap:"5px",flexShrink:0 }}>
-                <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"11px",color:"#5a5040" }}>Lease <span style={{ color:"#8a7060" }}>${t.lease}</span></p>
-                <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"11px",color:"#3a3028" }}>Excl. <span style={{ color:"#4a3f2a" }}>${t.exclusive}</span></p>
+              <div style={{ display:"flex",gap:"12px",alignItems:"center",flexShrink:0 }}>
+                <p style={{ fontFamily:"'DM Sans',sans-serif",fontSize:"11px",color:"#5a5040",whiteSpace:"nowrap" }}>
+                  L <span style={{ color:"#8a7060" }}>${t.lease}</span>
+                  <span style={{ color:"#2a2520",margin:"0 6px" }}>·</span>
+                  E <span style={{ color:"#4a3f2a" }}>${t.exclusive}</span>
+                </p>
               </div>
               <button className="buy-btn" onClick={()=>setCheckout(t)}>License</button>
             </div>
-            {/* SoundCloud embed */}
-            <div style={{ padding:"0 24px 16px" }}>
-              <iframe
-                width="100%"
-                height="60"
-                scrolling="no"
-                frameBorder="no"
-                allow="autoplay"
-                src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(t.sc)}&color=%23e8d5b0&inverse=true&auto_play=false&show_user=false&show_artwork=false&show_comments=false&show_reposts=false&show_teaser=false`}
-                style={{ borderRadius:"2px", background:"transparent" }}
-              />
+            {/* SoundCloud player — dark themed */}
+            <div style={{ padding:"0 24px 14px", position:"relative" }}>
+              <div style={{ borderRadius:"2px", overflow:"hidden", background:"#0a0a08", border:"1px solid #141410" }}>
+                <iframe
+                  width="100%"
+                  height="52"
+                  scrolling="no"
+                  frameBorder="no"
+                  allow="autoplay"
+                  src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(t.sc)}&color=%23e8d5b0&inverse=true&auto_play=false&show_user=false&show_artwork=false&show_comments=false&show_reposts=false&show_teaser=false&hide_related=true`}
+                  style={{ display:"block", background:"#0a0a08" }}
+                />
+              </div>
             </div>
           </div>
         ))}
