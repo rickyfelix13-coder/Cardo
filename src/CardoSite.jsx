@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import GuideSection from "./GuideSection";
 
 const tracks = [
   { id: 1,  title: "THROW IT IN", bpm: 87,  key: "", lease: 29.99, exclusive: 149.99, tag: "LEASE",     duration: "3:00", sc: "https://soundcloud.com/ricky_felix/throw-it-in-1" },
@@ -145,9 +146,14 @@ export default function CardoSite() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("success") === "true") {
-      setSuccessBeat(params.get("beat") || "your beat");
+    if (params.get("success") === "true" && params.get("product") === "guide") {
+      setActive("FITNESS");            // buyer lands on their download
+    } else if (params.get("success") === "true" && params.get("beat")) {
+      setSuccessBeat(params.get("beat"));
       window.history.replaceState({}, "", "/");
+    } else if (params.get("s")) {       // share link: /?s=fitness lands here
+      const seg = params.get("s").toUpperCase();
+      if (["BEATS","MUSIC","FITNESS","JOURNAL","ABOUT"].includes(seg)) setActive(seg);
     }
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
@@ -169,7 +175,7 @@ export default function CardoSite() {
   }, [playing]);
 
   const togglePlay = id => setPlaying(p => p === id ? null : id);
-  const navItems = ["BEATS","MUSIC","JOURNAL","ABOUT"];
+  const navItems = ["BEATS","MUSIC","FITNESS","JOURNAL","ABOUT"];
 
   const css = `
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
@@ -377,7 +383,7 @@ export default function CardoSite() {
     </div>
   );
 
-  const sections = { BEATS:renderBeats, MUSIC:renderMusic, JOURNAL:renderJournal, ABOUT:renderAbout };
+  const sections = { BEATS:renderBeats, MUSIC:renderMusic, FITNESS:()=><GuideSection/>, JOURNAL:renderJournal, ABOUT:renderAbout };
 
   return (
     <div style={{ background:"#080806",minHeight:"100vh",color:"#e8d5b0" }}>
